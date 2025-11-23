@@ -3,6 +3,7 @@ import LoaderPage from './components/LoaderPage'
 import AuthPage from './components/Auth/AuthPage'
 import MainApp from './components/MainApp'
 
+// URL DE PRODUÇÃO (RENDER)
 const API_URL = 'https://patrulha-animal-backend.onrender.com';
 
 export default function App() {
@@ -18,12 +19,16 @@ export default function App() {
       try {
         const token = localStorage.getItem('token');
         const savedUser = localStorage.getItem('user');
+
         if (token && savedUser) {
           setCurrentUser(JSON.parse(savedUser));
           setIsAuthenticated(true);
         }
-      } catch (error) { localStorage.clear(); }
-      setTimeout(() => setIsLoading(false), 7500); 
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        localStorage.clear();
+      }
+      setTimeout(() => setIsLoading(false), 4000); 
     };
     loadApp();
   }, []);
@@ -33,16 +38,25 @@ export default function App() {
       if (isAuthenticated) {
         try {
           const token = localStorage.getItem('token');
+          // USANDO URL DO RENDER
           const response = await fetch(`${API_URL}/api/pets`, {
             headers: { 'x-auth-token': token }
           });
+          
           if(response.ok) {
             const petsFromDB = await response.json();
             setPets(petsFromDB);
-          } else { handleLogout(); }
-        } catch (error) { console.error(error); }
-      } else { setPets([]); }
+          } else {
+            handleLogout();
+          }
+        } catch (error) {
+          console.error('Erro ao buscar pets:', error);
+        }
+      } else {
+        setPets([]); 
+      }
     };
+
     fetchPets();
   }, [isAuthenticated]);
 
@@ -64,16 +78,22 @@ export default function App() {
       const token = localStorage.getItem('token');
       const response = await fetch(`${API_URL}/api/pets`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': token,
+        },
         body: JSON.stringify(petData)
       });
+
       if(response.ok) {
-        const newPet = await response.json();
-        setPets(prev => [...prev, newPet]); 
+        const newPetFromDB = await response.json();
+        setPets(prev => [...prev, newPetFromDB]); 
         setCurrentPage('home');
-        setPreSelectedPetId(newPet._id);
+        setPreSelectedPetId(newPetFromDB._id);
       }
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      console.error("Erro ao salvar pet:", error);
+    }
   };
 
   const handleLocationUpdate = async (petId, newLocation) => {
@@ -81,13 +101,22 @@ export default function App() {
       const token = localStorage.getItem('token');
       await fetch(`${API_URL}/api/pets/${petId}/location`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': token
+        },
         body: JSON.stringify(newLocation)
       });
-      setPets(prev => prev.map(p => p._id === petId ? { ...p, lastPosition: newLocation } : p));
-    } catch (error) { console.error(error); }
-  };
 
+      setPets(prevPets => prevPets.map(pet => 
+        pet._id === petId 
+          ? { ...pet, lastPosition: newLocation } 
+          : pet
+      ));
+    } catch (error) {
+      console.error("Erro ao atualizar localização", error);
+    }
+  };
 
   const handleDeletePet = async (petId) => {
     if (!window.confirm("Tem certeza que deseja remover este pet?")) return;
@@ -99,7 +128,7 @@ export default function App() {
       });
 
       if (response.ok) {
-        setPets(prev => prev.filter(p => p._id !== petId)); 
+        setPets(prev => prev.filter(p => p._id !== petId));
       }
     } catch (error) {
       console.error("Erro ao deletar:", error);
@@ -117,7 +146,7 @@ export default function App() {
 
       if (response.ok) {
         const updatedPet = await response.json();
-        setPets(prev => prev.map(p => p._id === petId ? updatedPet : p)); 
+        setPets(prev => prev.map(p => p._id === petId ? updatedPet : p));
       }
     } catch (error) {
       console.error("Erro ao atualizar:", error);
@@ -131,7 +160,11 @@ export default function App() {
 
   return (
     <div id="app-container" className="relative w-full max-w-md mx-auto h-screen md:h-[85vh] md:mt-8 bg-slate-50 md:rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-slate-200">
-      {isLoading ? <LoaderPage /> : !isAuthenticated ? <AuthPage onLogin={handleLogin} /> : (
+      {isLoading ? (
+        <LoaderPage />
+      ) : !isAuthenticated ? (
+        <AuthPage onLogin={handleLogin} />
+      ) : (
         <MainApp
           user={currentUser}
           pets={pets}

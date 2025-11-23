@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
+// URL DE PRODUÇÃO (RENDER)
+const API_URL = 'https://patrulha-animal-backend.onrender.com';
+
 export default function SignupPage({ onSignup, onShowLogin }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -7,7 +10,7 @@ export default function SignupPage({ onSignup, onShowLogin }) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const API_URL = 'https://patrulha-animal-backend.onrender.com';
+
   useEffect(() => {
     if (window.lucide) window.lucide.createIcons();
   }, []);
@@ -24,6 +27,7 @@ export default function SignupPage({ onSignup, onShowLogin }) {
     setLoading(true)
 
     try {
+      // USANDO A URL DO RENDER
       const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
@@ -58,7 +62,6 @@ export default function SignupPage({ onSignup, onShowLogin }) {
       <div className="flex-grow flex justify-center bg-slate-50 px-4 pt-10 pb-8">
         <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-100 p-8 relative z-10 h-fit">
           
-          {/* Cabeçalho */}
           <div className="text-center mb-8">
             <div className="w-20 h-20 mx-auto mb-4 -mt-4">
                <img src="https://i.ibb.co/DDr5XWQB/Chat-GPT-Image-3-de-nov-de-2025-21-35-56.png" alt="Patrulha Animal Logo" className="w-full h-full object-contain" />
@@ -67,10 +70,7 @@ export default function SignupPage({ onSignup, onShowLogin }) {
             <p className="text-slate-500 mt-2 text-sm">Junte-se à Patrulha e proteja seu pet.</p>
           </div>
 
-          {/* Formulário */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            
-            {/* Input Nome */}
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <i data-lucide="user" className="h-5 w-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors"></i>
@@ -85,7 +85,6 @@ export default function SignupPage({ onSignup, onShowLogin }) {
               />
             </div>
 
-            {/* Input Email */}
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <i data-lucide="mail" className="h-5 w-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors"></i>
@@ -100,7 +99,6 @@ export default function SignupPage({ onSignup, onShowLogin }) {
               />
             </div>
 
-            {/* Input CPF */}
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <i data-lucide="file-text" className="h-5 w-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors"></i>
@@ -114,7 +112,6 @@ export default function SignupPage({ onSignup, onShowLogin }) {
               />
             </div>
 
-            {/* Input Senha */}
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <i data-lucide="lock" className="h-5 w-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors"></i>
@@ -136,7 +133,6 @@ export default function SignupPage({ onSignup, onShowLogin }) {
                </div>
             )}
             
-            {/* Botão Cadastrar */}
             <button 
                 type="submit" 
                 disabled={loading}
@@ -146,7 +142,6 @@ export default function SignupPage({ onSignup, onShowLogin }) {
             </button>
           </form>
 
-          {/* Rodapé */}
           <div className="mt-8 text-center">
             <p className="text-sm text-slate-500">
               Já tem uma conta?{' '}

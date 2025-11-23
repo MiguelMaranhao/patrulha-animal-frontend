@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { API_BASE_URL } from '../../config';
 
+// URL DE PRODUÇÃO (RENDER)
 const API_URL = 'https://patrulha-animal-backend.onrender.com';
 
 export default function LoginPage({ onLogin, onShowSignup }) {
@@ -22,6 +22,7 @@ export default function LoginPage({ onLogin, onShowSignup }) {
     }
     setLoading(true)
     try {
+      // USANDO A URL DO RENDER
       const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -38,32 +39,29 @@ export default function LoginPage({ onLogin, onShowSignup }) {
       }
     } catch (err) {
       console.error("Erro:", err);
-      setError('Sem conexão com o servidor.');
+      setError('Sem conexão com o servidor (Verifique se o Render está ativo).');
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex flex-col"> 
+    <div className="min-h-screen relative overflow-hidden flex flex-col">
       <div className="absolute top-[-10%] right-[-10%] w-64 h-64 bg-emerald-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
       <div className="absolute bottom-[-10%] left-[-10%] w-64 h-64 bg-teal-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
 
-      <div className="flex-grow flex justify-center bg-slate-50 px-4 pt-16 pb-8"> 
-        <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-100 p-8 relative z-10">
+      <div className="flex-grow flex justify-center bg-slate-50 px-4 pt-16 pb-8">
+        <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-100 p-8 relative z-10 h-fit">
           
           <div className="text-center mb-10">
-            <div className="w-24 h-24 mx-auto mb-4 -mt-4"> 
+            <div className="w-24 h-24 mx-auto mb-4 -mt-4">
               <img src="https://i.ibb.co/DDr5XWQB/Chat-GPT-Image-3-de-nov-de-2025-21-35-56.png" alt="Patrulha Animal Logo" className="w-full h-full object-contain" />
             </div>
-            <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">Patrulha Animal</h1>
-            <p className="text-slate-500 mt-2 text-sm">O cuidado completo que seu pet merece.</p>
+            <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">Bem-vindo de volta</h1>
+            <p className="text-slate-500 mt-2 text-sm">Gerencie a segurança do seu pet.</p>
           </div>
 
-          {/* Formulário */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            
-            {/* Input Email */}
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <i data-lucide="mail" className="h-5 w-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors"></i>
@@ -78,7 +76,6 @@ export default function LoginPage({ onLogin, onShowSignup }) {
               />
             </div>
 
-            {/* Input Senha */}
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <i data-lucide="lock" className="h-5 w-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors"></i>
@@ -93,7 +90,6 @@ export default function LoginPage({ onLogin, onShowSignup }) {
               />
             </div>
 
-            {/* Erro */}
             {error && (
               <div className="p-3 bg-red-50 border border-red-100 text-red-600 rounded-lg text-sm flex items-center animate-pulse">
                  <i data-lucide="alert-circle" className="w-4 h-4 mr-2"></i>
@@ -101,7 +97,6 @@ export default function LoginPage({ onLogin, onShowSignup }) {
               </div>
             )}
 
-            {/* Botão Principal */}
             <button
               type="submit"
               disabled={loading}
@@ -111,7 +106,6 @@ export default function LoginPage({ onLogin, onShowSignup }) {
             </button>
           </form>
 
-          {/* Rodapé do Card */}
           <div className="mt-8 text-center">
             <p className="text-sm text-slate-500">
               Não tem uma conta?{' '}
@@ -121,7 +115,6 @@ export default function LoginPage({ onLogin, onShowSignup }) {
             </p>
           </div>
 
-          {/* Separador Google */}
           <div className="relative mt-8">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-200"></div>
