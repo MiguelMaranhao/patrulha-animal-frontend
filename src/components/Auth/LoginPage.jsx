@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { API_BASE_URL } from '../../config';
+
+const API_URL = 'https://patrulha-animal-backend.onrender.com';
 
 export default function LoginPage({ onLogin, onShowSignup }) {
   const [email, setEmail] = useState('')
@@ -19,7 +22,7 @@ export default function LoginPage({ onLogin, onShowSignup }) {
     }
     setLoading(true)
     try {
-      const response = await fetch('http://127.0.0.1:3000/api/auth/login', {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

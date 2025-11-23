@@ -7,7 +7,7 @@ export default function SignupPage({ onSignup, onShowLogin }) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-
+  const API_URL = 'https://patrulha-animal-backend.onrender.com';
   useEffect(() => {
     if (window.lucide) window.lucide.createIcons();
   }, []);
@@ -24,7 +24,7 @@ export default function SignupPage({ onSignup, onShowLogin }) {
     setLoading(true)
 
     try {
-      const response = await fetch('http://127.0.0.1:3000/api/auth/register', {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +35,6 @@ export default function SignupPage({ onSignup, onShowLogin }) {
       const data = await response.json();
 
       if (response.ok) {
-        // Salva token para já entrar logado
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         onSignup(data.user); 
