@@ -3,7 +3,6 @@ import LoaderPage from './components/LoaderPage'
 import AuthPage from './components/Auth/AuthPage'
 import MainApp from './components/MainApp'
 
-// URL DE PRODUÇÃO (RENDER)
 const API_URL = 'https://patrulha-animal-backend.onrender.com';
 
 export default function App() {
@@ -28,7 +27,7 @@ export default function App() {
         console.error('Erro ao carregar dados:', error);
         localStorage.clear();
       }
-      setTimeout(() => setIsLoading(false), 4000); 
+      setTimeout(() => setIsLoading(false), 4500); 
     };
     loadApp();
   }, []);
@@ -38,7 +37,6 @@ export default function App() {
       if (isAuthenticated) {
         try {
           const token = localStorage.getItem('token');
-          // USANDO URL DO RENDER
           const response = await fetch(`${API_URL}/api/pets`, {
             headers: { 'x-auth-token': token }
           });
@@ -159,7 +157,7 @@ export default function App() {
   };
 
   return (
-    <div id="app-container" className="relative w-full max-w-md mx-auto h-screen md:h-[85vh] md:mt-8 bg-slate-50 md:rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-slate-200">
+    <div id="app-container" className="fixed inset-0 w-full max-w-md mx-auto h-[100dvh] md:h-[85vh] md:relative md:mt-8 bg-slate-50 md:rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-slate-200 overscroll-none">
       {isLoading ? (
         <LoaderPage />
       ) : !isAuthenticated ? (

@@ -15,7 +15,7 @@ export default function NavBar({ currentPage, onNavigate }) {
   }, [currentPage]);
 
   return (
-    <nav className="absolute bottom-0 left-0 w-full bg-white border-t border-slate-100 shadow-[0_-4px_20px_rgba(0,0,0,0.03)] px-2 py-2 z-50">
+    <nav className="w-full bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.03)] px-2 py-2 pb-safe">
       <div className="flex justify-between items-end max-w-md mx-auto w-full">
         
         {navItems.map((item) => {

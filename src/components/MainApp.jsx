@@ -58,13 +58,15 @@ export default function MainApp(props) {
   }
 
   return (
-    <div className="flex flex-col h-full relative bg-slate-50">
+    <div className="flex flex-col h-full w-full bg-slate-50 relative overflow-hidden">
       
-      <main className="flex-1 overflow-y-auto scrollbar-hide w-full pb-24">
+      <main className="flex-1 overflow-y-auto scrollbar-hide w-full bg-slate-50 overscroll-contain">
         {renderContent()}
       </main>
 
-      <NavBar currentPage={currentPage} onNavigate={onNavigate} />
+      <div className="flex-none z-50 w-full bg-white border-t border-slate-100">
+        <NavBar currentPage={currentPage} onNavigate={onNavigate} />
+      </div>
     </div>
   )
 }

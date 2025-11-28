@@ -63,7 +63,6 @@ export default function HomeContent({ user, pets, onNavigate, preSelectedPetId, 
   return (
     <div className="min-h-full bg-slate-50 p-6 pb-32 font-sans">
       
-      {/* Header Moderno */}
       <header className="flex justify-between items-end mb-8">
         <div>
           <p className="text-slate-500 text-sm font-medium mb-1">Bem-vindo de volta,</p>
