@@ -26,7 +26,6 @@ Crie um arquivo `.env.local` na raiz do projeto:
 
 
 # Chave da API do Google Maps (Necessária para renderizar o mapa)
-VITE_GOOGLE_MAPS_API_KEY=SOLICITE_A_CHAVE_AO_ALUNO
 OBS: ENVIADA NO COMENTÁRIO DA ENTREGA
 
 🚀 Como Rodar o Projeto
