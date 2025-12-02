@@ -32,10 +32,11 @@ OBS: ENVIADA NO COMENTÁRIO DA ENTREGA
 
  Instalação
  
-Clone o repositório e instale as dependências:
+## Clone o repositório e instale as dependências:
 
 
 cd patrulha-animal-frontend
+
 npm install
 
 # Conexão com Backend
